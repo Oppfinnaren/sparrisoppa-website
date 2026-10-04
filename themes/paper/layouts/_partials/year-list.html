@@ -1,0 +1,22 @@
+{{- /*
+  Ruled list grouped by year (design 2a).
+  Context: dict "pages" (Pages) "aside" ("status" | "date")
+*/ -}}
+<div class="list">
+  {{- range .pages.GroupByDate "2006" }}
+  <div class="year-group">
+    <div class="label">{{ .Key }}</div>
+    {{- range .Pages }}
+    <a class="list-row" href="{{ .RelPermalink }}">
+      <span><span class="title">{{ .Title }}</span>
+        {{- with .Description }}<span class="desc">{{ . }}</span>{{ end }}</span>
+      <span class="aside">
+        {{- if eq $.aside "status" }}{{ .Params.status }}{{ else }}{{ .Date.Format "Jan 2" }}{{ end -}}
+      </span>
+    </a>
+    {{- end }}
+  </div>
+  {{- else }}
+  <p class="empty">Nothing here yet.</p>
+  {{- end }}
+</div>

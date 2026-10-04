@@ -1,0 +1,51 @@
+# Site settings. Content lives in content/, the look in themes/paper/.
+baseURL = "https://yourname.se/"
+locale = "en"
+title = "Your Name"
+theme = "paper"
+
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  author = "Your Name"
+  description = "Software engineer building small tools and careful systems. Based in Stockholm."
+  email = "hello@yourname.se"
+
+  # Shown after the email in the footer and on the About page, in this order.
+  [[params.social]]
+    name = "GitHub"
+    url = "https://github.com/yourname"
+  [[params.social]]
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/yourname"
+
+# Top menu, left to right.
+[menus]
+  [[menus.main]]
+    name = "Index"
+    pageRef = "/"
+    weight = 10
+  [[menus.main]]
+    name = "Projects"
+    pageRef = "/projects"
+    weight = 20
+  [[menus.main]]
+    name = "Writing"
+    pageRef = "/writing"
+    weight = 30
+  [[menus.main]]
+    name = "About"
+    pageRef = "/about"
+    weight = 40
+
+[outputs]
+  home = ["html"]
+  section = ["html", "rss"]
+
+[markup.highlight]
+  noClasses = true
+  style = "bw"
+
+[minify.tdewolff.html]
+  keepWhitespace = false

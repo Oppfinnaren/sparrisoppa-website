@@ -1,0 +1,20 @@
+{{ define "main" }}
+<section class="hero">
+  <h1>{{ .Title }}</h1>
+  <div class="statement">{{ .Content }}</div>
+</section>
+
+{{- $limit := .Params.featured_limit | default 4 }}
+{{- $featured := where site.RegularPages "Params.featured" true }}
+{{- with first $limit $featured.ByDate.Reverse }}
+<section class="featured">
+  <div class="label">{{ $.Params.featured_heading | default "Selected projects" }}</div>
+  {{- range . }}
+  <a class="featured-row" href="{{ .RelPermalink }}">
+    <span>{{ .Params.home_title | default .Title }}</span>
+    <span class="muted">{{ .Params.year | default .Date.Year }}</span>
+  </a>
+  {{- end }}
+</section>
+{{- end }}
+{{ end }}

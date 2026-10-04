@@ -1,0 +1,4 @@
+name = "Paper"
+license = "MIT"
+description = "A minimal typewriter theme on warm cream paper: centered menu, ruled lists, projects, writing and an about page."
+min_version = "0.158.0"

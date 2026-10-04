@@ -1,0 +1,27 @@
+{{ define "main" }}
+<article class="article is-about">
+  {{- with .Params.portrait }}
+  <img class="portrait" src="{{ . | relURL }}" alt="{{ site.Params.author }}" width="110" height="110">
+  {{- else }}
+  <div class="portrait placeholder" aria-hidden="true">portrait</div>
+  {{- end }}
+  <h1>{{ .Title }}</h1>
+  <div class="prose">{{ .Content }}</div>
+
+  {{- with .Params.previously }}
+  <div class="label">{{ $.Params.previously_heading | default "Previously" }}</div>
+  <dl class="timeline">
+    {{- range . }}
+    <dt>{{ .when }}</dt><dd>{{ .what }}</dd>
+    {{- end }}
+  </dl>
+  {{- end }}
+
+  <div class="label">{{ .Params.elsewhere_heading | default "Elsewhere" }}</div>
+  <div class="link-row elsewhere">
+    {{- partial "contact-links.html" (dict) -}}
+  </div>
+</article>
+{{ end }}
+
+{{ define "footer" }}{{ partial "footer-copyright.html" . }}{{ end }}
