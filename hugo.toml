@@ -1,5 +1,5 @@
 # Site settings. Content lives in content/, the look in themes/paper/.
-baseURL = "https://oppfinnaren.github.io/sparrisoppa-website/"
+baseURL = "https://sparrisoppa.github.io/website/"
 locale = "en"
 title = "Mathias Kallmert"
 theme = "paper"
@@ -15,7 +15,7 @@ disableKinds = ["taxonomy", "term"]
   # Shown after the email in the footer and on the About page, in this order.
   [[params.social]]
     name = "GitHub"
-    url = "https://github.com/Oppfinnaren"
+    url = "https://github.com/sparrisoppa"
   [[params.social]]
     name = "LinkedIn"
     url = "https://www.linkedin.com/in/mathias-kallmert-66338ab2"

@@ -55,7 +55,7 @@ featured: true              # list it on the home page
 home_title: "WALL-E, a trash-collecting robot"
 links:
   - name: "Source on GitHub"
-    url: "https://github.com/Oppfinnaren/wall-e"
+    url: "https://github.com/sparrisoppa/wall-e"
 draft: false                # drafts are not published
 ---
 ```
@@ -87,7 +87,7 @@ The theme still supports a blog. Create `content/writing/_index.md` with a `titl
 
 There are two ways to publish, and you can use either or both:
 
-- **GitHub Pages**: GitHub hosts the site, on `oppfinnaren.github.io/sparrisoppa-website` or on your own domain. No server needed.
+- **GitHub Pages**: GitHub hosts the site, on `sparrisoppa.github.io/website` or on your own domain. No server needed.
 - **Your own server** with Caddy or nginx, updated over SSH.
 
 ### GitHub Pages
@@ -95,7 +95,7 @@ There are two ways to publish, and you can use either or both:
 `.github/workflows/pages.yml` builds and publishes the site on every push to `main`.
 
 1. **Turn it on (once):** in the repository, open **Settings → Pages** and set **Source** to **GitHub Actions**. Then run the "GitHub Pages" workflow from the **Actions** tab, or push a commit.
-2. **The site is live at** https://oppfinnaren.github.io/sparrisoppa-website/.
+2. **The site is live at** https://sparrisoppa.github.io/website/.
 
 Pages needs a public repository, unless you have a paid GitHub plan.
 
@@ -114,7 +114,7 @@ Pages needs a public repository, unless you have a paid GitHub plan.
    | AAAA | @ | 2606:50c0:8001::153 |
    | AAAA | @ | 2606:50c0:8002::153 |
    | AAAA | @ | 2606:50c0:8003::153 |
-   | CNAME | www | oppfinnaren.github.io |
+   | CNAME | www | sparrisoppa.github.io |
 
 3. Once DNS has updated (minutes to a few hours), tick **Enforce HTTPS** in the same settings page. GitHub issues the certificate itself.
 4. Run the workflow again, so the links use the new address. The workflow reads the address from the Pages settings, so nothing in the code needs to change.
