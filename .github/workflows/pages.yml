@@ -48,9 +48,32 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Fetch the published home page and fail if it isn't the Hugo site.
+  verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the live site
+        env:
+          URL: ${{ needs.deploy.outputs.page_url }}
+        run: |
+          for i in 1 2 3 4 5 6; do
+            html=$(curl -fsSL -H 'Cache-Control: no-cache' "${URL}?v=${GITHUB_RUN_ID}-${i}") || html=""
+            if grep -q 'class="nav"\|class=nav' <<<"$html"; then
+              title=$(grep -o '<title>[^<]*' <<<"$html" | head -1 | sed 's/<title>//')
+              echo "::notice title=Live site OK::${URL} serves the Hugo site (title: ${title})"
+              exit 0
+            fi
+            sleep 20
+          done
+          echo "::error title=Live site check failed::${URL} does not serve the Hugo site. First 300 chars: $(head -c 300 <<<"$html" | tr '\n' ' ')"
+          exit 1
