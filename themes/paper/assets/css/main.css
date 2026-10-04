@@ -9,8 +9,8 @@
   --ink-soft: #5c564b;
   --muted: #7a7266;
   --rule: #cfc8b8;
-  --stripe-a: #e8e2d2;
-  --stripe-b: #efeadc;
+  --stripe-a: color-mix(in srgb, var(--ink) 7%, var(--paper));
+  --stripe-b: color-mix(in srgb, var(--ink) 3%, var(--paper));
 
   --font: 'Courier Prime', 'Courier New', Courier, monospace;
   --page: 760px;
