@@ -1,24 +1,24 @@
 # Site settings. Content lives in content/, the look in themes/paper/.
-baseURL = "https://yourname.se/"
+baseURL = "https://oppfinnaren.github.io/sparrisoppa-website/"
 locale = "en"
-title = "Your Name"
+title = "Mathias Kallmert"
 theme = "paper"
 
 enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 
 [params]
-  author = "Your Name"
-  description = "Software engineer building small tools and careful systems. Based in Stockholm."
-  email = "hello@yourname.se"
+  author = "Mathias Kallmert"
+  description = "Software engineer with focus on creating refined products. Based in Stockholm."
+  email = "mathias.kallmert@gmail.com"
 
   # Shown after the email in the footer and on the About page, in this order.
   [[params.social]]
     name = "GitHub"
-    url = "https://github.com/yourname"
+    url = "https://github.com/Oppfinnaren"
   [[params.social]]
     name = "LinkedIn"
-    url = "https://www.linkedin.com/in/yourname"
+    url = "https://www.linkedin.com/in/mathias-kallmert-66338ab2"
 
 # Top menu, left to right.
 [menus]
@@ -30,10 +30,6 @@ disableKinds = ["taxonomy", "term"]
     name = "Projects"
     pageRef = "/projects"
     weight = 20
-  [[menus.main]]
-    name = "Writing"
-    pageRef = "/writing"
-    weight = 30
   [[menus.main]]
     name = "About"
     pageRef = "/about"

@@ -17,4 +17,4 @@ I'm a software engineer in Stockholm. I build tools for developers and small tea
 
 Before working independently I spent eight years at product companies, mostly on data infrastructure and internal platforms. This site collects what I've made and written since.
 
-I take on a few consulting engagements each year, usually architecture reviews or prototypes. If you have something in mind, [write to me](mailto:hello@yourname.se).
+I take on a few consulting engagements each year, usually architecture reviews or prototypes. If you have something in mind, [write to me](mailto:mathias.kallmert@gmail.com).

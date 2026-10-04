@@ -1,6 +1,6 @@
 # Personal site
 
-A small personal site built with [Hugo](https://gohugo.io): a home page, projects, writing and an about page. The look is typewriter type on cream paper, from the Claude Design mockups in `design/` (directions 1a, 2a, 2b and 2c).
+A small personal site built with [Hugo](https://gohugo.io): a home page, projects and an about page. The look is typewriter type on cream paper, from the Claude Design mockups in `design/` (directions 1a, 2a, 2b and 2c).
 
 All text is in Markdown files under `content/`. To update the site, edit a file and push to `main`. GitHub Actions builds the site and copies it to your server.
 
@@ -9,7 +9,6 @@ content/            ← your text (Markdown)
   _index.md           home page: name and short statement
   about.md            about page, plus the "Previously" list
   projects/           one file per project
-  writing/            one file per post
 static/images/      ← images you reference from content
 hugo.toml           ← site name, email, social links, menu
 themes/paper/       ← the template (layouts, CSS, fonts)
@@ -44,39 +43,41 @@ Make a new project with `hugo new content projects/my-project.md`, or copy an ex
 
 ```yaml
 ---
-title: "Lantern"
-date: 2026-03-01            # sets the year group and the order
-description: "A local-first notes app that syncs when it can."
-status: "in progress"       # shown in the list, capitalised on the page
+title: "WALL-E"
+date: 2022-01-01
+weight: 1                   # order in lists: lower comes first
+year: "2022 – now"          # optional, otherwise the year of `date`
+description: "A four-wheeled robot that collects trash on its own."
+status: "work in progress"  # shown in the list, capitalised on the page
 role: "Design, code"
-stack: ["Rust", "SQLite"]
+stack: ["Language", "Framework"]  # a list or a single string
 featured: true              # list it on the home page
-home_title: "Lantern, a local-first notes app"
+home_title: "WALL-E, a trash-collecting robot"
 links:
   - name: "Source on GitHub"
-    url: "https://github.com/yourname/lantern"
+    url: "https://github.com/Oppfinnaren/wall-e"
 draft: false                # drafts are not published
 ---
 ```
 
-`role`, `stack` and `status` are optional. The row of facts under the title only shows the ones you fill in. You can set `year: "2024 – 25"` to override the year shown.
+`role`, `stack`, `status`, `year` and `links` are optional. The row of facts under the title only shows the ones you fill in.
+
+Projects are listed by `weight`, then newest first. Projects next to each other in that order that share a year label sit under one year heading.
 
 The body is ordinary Markdown. `##` gives the small bold subheadings. For figures, use the shortcode:
 
 ```
-{{< figure src="/images/lantern-sync.png" alt="Sync diagram" caption="Fig. 1, the sync model" >}}
+{{< figure src="/images/wall-e.jpg" alt="Sync diagram" caption="Fig. 1, the sync model" >}}
 {{< figure placeholder="screenshot or diagram" caption="Fig. 1, the sync model" >}}
 ```
 
-Put images in `static/images/`. You can also make the project a folder (`projects/lantern/index.md`) and keep its images beside it, then use `src="sync.png"`.
+Put images in `static/images/`. You can also make the project a folder (`projects/wall-e/index.md`) and keep its images beside it, then use `src="sync.png"`.
 
-"Next project" at the bottom goes to the next older project and loops back to the newest after the last one.
+"Next project" at the bottom goes to the next project in list order and loops back to the first after the last one.
 
-### Writing
+### Adding a Writing section later
 
-Use `hugo new content writing/my-post.md`. Posts take `title`, `date`, `description` (shown in the list) and optionally `featured`. The writing section has an RSS feed at `/writing/index.xml`.
-
-The mockups had no writing pages, so these reuse the project list and project page styles.
+The theme still supports a blog. Create `content/writing/_index.md` with a `title` and `description`, add posts as `content/writing/my-post.md` (with `title`, `date` and `description`), and add a "Writing" entry to `menus.main` in `hugo.toml`. Posts get the same list and page styles as projects, plus an RSS feed.
 
 ### About
 

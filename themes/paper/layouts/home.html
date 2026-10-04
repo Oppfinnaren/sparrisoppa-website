@@ -6,7 +6,7 @@
 
 {{- $limit := .Params.featured_limit | default 4 }}
 {{- $featured := where site.RegularPages "Params.featured" true }}
-{{- with first $limit $featured.ByDate.Reverse }}
+{{- with first $limit $featured }}
 <section class="featured">
   <div class="label">{{ $.Params.featured_heading | default "Selected projects" }}</div>
   {{- range . }}

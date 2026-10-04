@@ -10,7 +10,7 @@ featured: false         # true = listed on the home page
 home_title: ""          # optional, e.g. "Name, a short description"
 links: []
 #  - name: "Source on GitHub"
-#    url: "https://github.com/yourname/repo"
+#    url: "https://github.com/Oppfinnaren/repo"
 ---
 
 What it is and why it exists.
