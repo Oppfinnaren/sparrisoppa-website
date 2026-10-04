@@ -269,13 +269,13 @@ main { flex: 1 0 auto; display: flex; flex-direction: column; }
   color: var(--ink-soft);
 }
 .prose hr { border: 0; border-top: 1px solid var(--rule); margin: 32px 0; }
-.prose code { font-family: var(--font); background: var(--stripe-b); padding: 1px 4px; }
+.prose code { font-family: var(--font); background: color-mix(in srgb, var(--ink) 6%, transparent); padding: 1px 4px; }
 .prose pre {
   font-size: 14px;
   line-height: 1.6;
   padding: 16px 18px;
   overflow-x: auto;
-  background: var(--stripe-b) !important;
+  background: color-mix(in srgb, var(--ink) 5%, transparent) !important;
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
 }
