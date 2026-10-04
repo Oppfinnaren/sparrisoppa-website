@@ -4,5 +4,5 @@
 {{- range site.Params.social }}{{ $links = $links | append (dict "name" .name "url" .url) }}{{ end }}
 {{- range $i, $l := $links }}
   {{- if and $i $.sep }}<span class="sep" aria-hidden="true">{{ $.sep }}</span>{{ end -}}
-  <a href="{{ $l.url }}"{{ with $.class }} class="{{ . }}"{{ end }}{{ if hasPrefix $l.url "http" }} rel="me noopener"{{ end }}>{{ $l.name }}</a>
+  <a href="{{ partial "url.html" $l.url }}"{{ with $.class }} class="{{ . }}"{{ end }}{{ if hasPrefix $l.url "http" }} rel="me noopener"{{ end }}>{{ $l.name }}</a>
 {{- end }}

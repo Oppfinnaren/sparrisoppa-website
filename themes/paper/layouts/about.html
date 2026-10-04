@@ -1,7 +1,7 @@
 {{ define "main" }}
 <article class="article is-about">
   {{- with .Params.portrait }}
-  <img class="portrait" src="{{ . | relURL }}" alt="{{ site.Params.author }}" width="110" height="110">
+  <img class="portrait" src="{{ partial "url.html" . }}" alt="{{ site.Params.author }}" width="110" height="110">
   {{- else }}
   <div class="portrait placeholder" aria-hidden="true">portrait</div>
   {{- end }}

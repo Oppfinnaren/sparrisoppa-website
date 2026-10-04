@@ -1,0 +1,6 @@
+{{- /* Resolve a URL from content: site paths like "/images/a.png" get the baseURL path prepended, so the site also works under a subpath. External links, mailto: and #anchors pass through. */ -}}
+{{- $u := . -}}
+{{- if and (hasPrefix $u "/") (not (hasPrefix $u "//")) -}}
+  {{- $u = strings.TrimPrefix "/" $u | relURL -}}
+{{- end -}}
+{{- return $u -}}

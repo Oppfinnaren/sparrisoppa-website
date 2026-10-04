@@ -21,7 +21,7 @@
 
   {{- with .Params.links }}
   <div class="link-row">
-    {{- range . }}<a href="{{ .url }}">{{ .name }}</a>{{ end }}
+    {{- range . }}<a href="{{ partial "url.html" .url }}">{{ .name }}</a>{{ end }}
   </div>
   {{- end }}
 </article>

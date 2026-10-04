@@ -9,7 +9,7 @@
 <figure class="figure">
   {{- if $src }}
     {{- $img := "" }}
-    {{- with .Page.Resources.Get $src }}{{ $img = .RelPermalink }}{{ else }}{{ $img = $src | relURL }}{{ end }}
+    {{- with .Page.Resources.Get $src }}{{ $img = .RelPermalink }}{{ else }}{{ $img = partial "url.html" $src }}{{ end }}
   <img src="{{ $img }}" alt="{{ .Get "alt" | default $caption }}" loading="lazy">
   {{- else }}
   <div class="placeholder">{{ .Get "placeholder" | default "image" }}</div>

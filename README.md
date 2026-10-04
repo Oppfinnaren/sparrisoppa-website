@@ -82,7 +82,47 @@ The mockups had no writing pages, so these reuse the project list and project pa
 
 `content/about.md`. The body holds the paragraphs. `previously` fills the timeline, and `portrait` takes an image path such as `/images/me.jpg` (square, at least 220×220). Leave `portrait` empty to show the striped placeholder. The "Elsewhere" links come from `hugo.toml`.
 
-## Publishing to your server
+## Publishing
+
+There are two ways to publish, and you can use either or both:
+
+- **GitHub Pages**: GitHub hosts the site, on `oppfinnaren.github.io/sparrisoppa-website` or on your own domain. No server needed.
+- **Your own server** with Caddy or nginx, updated over SSH.
+
+### GitHub Pages
+
+`.github/workflows/pages.yml` builds and publishes the site on every push to `main`.
+
+1. **Turn it on (once):** in the repository, open **Settings → Pages** and set **Source** to **GitHub Actions**. Then run the "GitHub Pages" workflow from the **Actions** tab, or push a commit.
+2. **The site is live at** https://oppfinnaren.github.io/sparrisoppa-website/.
+
+Pages needs a public repository, unless you have a paid GitHub plan.
+
+#### Using your own domain
+
+1. Under **Settings → Pages → Custom domain**, enter your domain (for example `yourname.se`) and save.
+2. At your DNS provider, add these records for the bare domain:
+
+   | Type | Name | Value |
+   | --- | --- | --- |
+   | A | @ | 185.199.108.153 |
+   | A | @ | 185.199.109.153 |
+   | A | @ | 185.199.110.153 |
+   | A | @ | 185.199.111.153 |
+   | AAAA | @ | 2606:50c0:8000::153 |
+   | AAAA | @ | 2606:50c0:8001::153 |
+   | AAAA | @ | 2606:50c0:8002::153 |
+   | AAAA | @ | 2606:50c0:8003::153 |
+   | CNAME | www | oppfinnaren.github.io |
+
+3. Once DNS has updated (minutes to a few hours), tick **Enforce HTTPS** in the same settings page. GitHub issues the certificate itself.
+4. Run the workflow again, so the links use the new address. The workflow reads the address from the Pages settings, so nothing in the code needs to change.
+
+It's also worth verifying the domain under your account's **Settings → Pages**. That stops anyone else from claiming it on GitHub.
+
+If you only use GitHub Pages, you can ignore `deploy/` and the server steps below. The server workflow skips itself while its secrets are unset.
+
+## Publishing to your own server
 
 The workflow in `.github/workflows/deploy.yml` runs on every push. It builds the site, and on `main` it copies `public/` to the server with rsync over SSH. Pull requests are only built, which checks that they don't break anything.
 

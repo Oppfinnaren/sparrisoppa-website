@@ -1,0 +1,3 @@
+{{- $dest := partial "url.html" .Destination -}}
+<a href="{{ $dest }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if strings.HasPrefix $dest "http" }} rel="noopener"{{ end }}>{{ .Text }}</a>
+{{- /**/ -}}
