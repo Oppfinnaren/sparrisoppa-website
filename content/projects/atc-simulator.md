@@ -44,7 +44,6 @@ An excerpt from a game at Stockholm Arlanda, playing the tower:
 > ```
 >
 > **SK1417 has called Mayday. What is your first transmission?**
-{.wide}
 
 You then pick one of four transmissions, or write your own, and the game tells you whether it was right and why.
 

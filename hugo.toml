@@ -39,10 +39,6 @@ disableKinds = ["taxonomy", "term"]
   home = ["html"]
   section = ["html", "rss"]
 
-# Lets content add a class to a block, e.g. {.wide} on the line after a quote.
-[markup.goldmark.parser.attribute]
-  block = true
-
 [markup.highlight]
   noClasses = true
   style = "bw"
