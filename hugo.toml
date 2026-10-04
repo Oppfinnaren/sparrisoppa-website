@@ -9,7 +9,7 @@ disableKinds = ["taxonomy", "term"]
 
 [params]
   author = "Mathias Kallmert"
-  description = "Software engineer with focus on creating refined products. Based in Stockholm."
+  description = "Software & Mechatronics engineer with focus on creating refined products. Based in Stockholm."
   email = "mathias.kallmert@gmail.com"
 
   # Shown after the email in the footer and on the About page, in this order.

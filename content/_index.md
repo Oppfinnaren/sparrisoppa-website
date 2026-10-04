@@ -6,4 +6,4 @@ featured_limit: 4
 featured_heading: "Selected projects"
 ---
 
-Software engineer with focus on creating refined products. Based in Stockholm.
+Software & Mechatronics engineer with focus on creating refined products. Based in Stockholm.

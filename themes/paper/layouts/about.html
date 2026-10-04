@@ -8,13 +8,16 @@
   <h1>{{ .Title }}</h1>
   <div class="prose">{{ .Content }}</div>
 
-  {{- with .Params.previously }}
-  <div class="label">{{ $.Params.previously_heading | default "Previously" }}</div>
+  {{- /* Each entry in `timelines` is a heading with a list of when/what rows. */}}
+  {{- range .Params.timelines }}
+    {{- if .items }}
+  <div class="label">{{ .heading }}</div>
   <dl class="timeline">
-    {{- range . }}
+      {{- range .items }}
     <dt>{{ .when }}</dt><dd>{{ .what }}</dd>
-    {{- end }}
+      {{- end }}
   </dl>
+    {{- end }}
   {{- end }}
 
   <div class="label">{{ .Params.elsewhere_heading | default "Elsewhere" }}</div>

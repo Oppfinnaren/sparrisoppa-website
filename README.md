@@ -7,7 +7,7 @@ All text is in Markdown files under `content/`. To update the site, edit a file 
 ```
 content/            ← your text (Markdown)
   _index.md           home page: name and short statement
-  about.md            about page, plus the "Previously" list
+  about.md            about page, plus the Experience and Education lists
   projects/           one file per project
 static/images/      ← images you reference from content
 hugo.toml           ← site name, email, social links, menu
@@ -81,7 +81,7 @@ The theme still supports a blog. Create `content/writing/_index.md` with a `titl
 
 ### About
 
-`content/about.md`. The body holds the paragraphs. `previously` fills the timeline, and `portrait` takes an image path such as `/images/me.jpg` (square, at least 220×220). Leave `portrait` empty to show the striped placeholder. The "Elsewhere" links come from `hugo.toml`.
+`content/about.md`. The body holds the paragraphs. `timelines` holds the lists under the text (each has a `heading` and `items` with `when` and `what`), and `portrait` takes an image path such as `/images/me.jpg` (square, at least 220×220). Leave `portrait` empty to show the striped placeholder. The "Elsewhere" links come from `hugo.toml`.
 
 ## Publishing
 
