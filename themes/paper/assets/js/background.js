@@ -1,57 +1,26 @@
-/* Living paper background: typed glyphs, pastel side washes and paper grain.
-   Ported from the "Home with typed grain" design (texture: type). */
+/* Living paper background: pastel side washes and a subtle paper grain.
+   Adapted from the "Home with typed grain" design. */
 (function () {
   var canvas = document.getElementById('paper-bg');
   if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext('2d');
-  var PAL = [[92, 116, 96], [158, 98, 72], [76, 92, 124], [146, 124, 70]];
   var PASTEL = [[247, 196, 178], [204, 194, 238], [184, 226, 206], [242, 222, 166], [182, 212, 238]];
-  var GLYPHS = ['.', ',', ':', ';', '+', '=', '*'];
-    var w = 0, h = 0, grain, grainPat;
+  var w = 0, h = 0, grain, grainPat;
 
+  /* subtle paper grain: dark and light specks, tiled */
+  var STRENGTH = 0.4, TILE = 256;
   function makeGrain() {
-    var g = document.createElement('canvas'); g.width = 180; g.height = 180;
-    var x = g.getContext('2d'), img = x.createImageData(180, 180);
+    var g = document.createElement('canvas'); g.width = g.height = TILE;
+    var x = g.getContext('2d'), img = x.createImageData(TILE, TILE);
     for (var i = 0; i < img.data.length; i += 4) {
-      var v = Math.random();
-      img.data[i] = 43; img.data[i + 1] = 40; img.data[i + 2] = 36;
-      img.data[i + 3] = v > 0.55 ? Math.floor((v - 0.55) / 0.45 * 11) : 0;
+      var v = Math.random(), dark = v < 0.5;
+      img.data[i] = dark ? 43 : 255;
+      img.data[i + 1] = dark ? 40 : 253;
+      img.data[i + 2] = dark ? 36 : 248;
+      img.data[i + 3] = Math.abs(v - 0.5) * 2 * 22 * STRENGTH;
     }
     x.putImageData(img, 0, 0);
     return g;
-  }
-
-  function hash(i, j, k) {
-    var h = Math.imul(i, 374761393) ^ Math.imul(j, 668265263) ^ Math.imul(k, 1440662683);
-    h = Math.imul(h ^ (h >>> 13), 1274126177); h ^= h >>> 16;
-    return (h >>> 0) / 4294967296;
-  }
-
-  function noise(x, y, z) {
-    var xi = Math.floor(x), yi = Math.floor(y), zi = Math.floor(z);
-    var xf = x - xi, yf = y - yi, zf = z - zi;
-    var u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf), w = zf * zf * (3 - 2 * zf);
-    var a = hash(xi, yi, zi), b = hash(xi + 1, yi, zi), c = hash(xi, yi + 1, zi), d = hash(xi + 1, yi + 1, zi);
-    var e = hash(xi, yi, zi + 1), f = hash(xi + 1, yi, zi + 1), g = hash(xi, yi + 1, zi + 1), hh = hash(xi + 1, yi + 1, zi + 1);
-    var p = (a + (b - a) * u) + ((c + (d - c) * u) - (a + (b - a) * u)) * v;
-    var q = (e + (f - e) * u) + ((g + (hh - g) * u) - (e + (f - e) * u)) * v;
-    return p + (q - p) * w;
-  }
-
-  function tint(x, y, t, mix) {
-    var n = noise(x * 0.0011 + 31, y * 0.0011 + 7, t * 0.022) * 6;
-    var i = Math.floor(n) % 4, f = n - Math.floor(n), A = PAL[i], B = PAL[(i + 1) % 4];
-    var r = 43 + ((A[0] + (B[0] - A[0]) * f) - 43) * mix;
-    var g = 40 + ((A[1] + (B[1] - A[1]) * f) - 40) * mix;
-    var b = 36 + ((A[2] + (B[2] - A[2]) * f) - 36) * mix;
-    return 'rgba(' + (r | 0) + ',' + (g | 0) + ',' + (b | 0) + ',';
-  }
-
-  /* quieter behind the text column */
-  function calm(x) {
-    var d = Math.abs(x - w / 2);
-    var s = Math.min(1, Math.max(0, (d - 280) / 240));
-    return 0.3 + 0.7 * s * s * (3 - 2 * s);
   }
 
   function drawPastel(t) {
@@ -84,36 +53,14 @@
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  function drawType(t) {
-    var CW = 18, CH = 24;
-    ctx.globalCompositeOperation = 'multiply';
-    ctx.font = '11px "Courier Prime", "Courier New", monospace';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    for (var gy = 0, j = 0; gy < h; gy += CH, j++) {
-      for (var gx = 0, i = 0; gx < w; gx += CW, i++) {
-        var x = gx + CW / 2, y = gy + CH / 2;
-        var v = noise((x + t * 5) * 0.0048, (y - t * 3) * 0.0048, t * 0.012) + (hash(i, j, 5) - 0.5) * 0.14;
-        if (v < 0.5) continue;
-        var idx = Math.min(GLYPHS.length - 1, Math.floor((v - 0.5) * 2 * GLYPHS.length));
-        var alpha = (0.075 + 0.07 * (v - 0.5)) * calm(x);
-        ctx.fillStyle = tint(x, y, t, 0.3) + alpha.toFixed(3) + ')';
-        ctx.fillText(GLYPHS[idx], x + (hash(i, j, 9) - 0.5) * 1.2, y + (hash(i, j, 13) - 0.5) * 1.2);
-      }
-    }
-    ctx.globalCompositeOperation = 'source-over';
-  }
-
   function draw(t) {
     ctx.clearRect(0, 0, w, h);
     drawPastel(t * 3);
-    drawType(t);
     if (!grainPat) grainPat = ctx.createPattern(grain, 'repeat');
-    ctx.globalAlpha = 0.55;
     ctx.fillStyle = grainPat; ctx.fillRect(0, 0, w, h);
-    ctx.globalAlpha = 1;
   }
 
-  /* one random moment of the drift, drawn once per page load; no animation loop */
+  /* one random arrangement of the washes, drawn once per page load; no animation loop */
   var T = Math.random() * 2000;
   var timer;
 
