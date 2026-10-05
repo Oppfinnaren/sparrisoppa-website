@@ -1,4 +1,4 @@
-/* Living paper background: drifting typed glyphs, pastel side washes and paper grain.
+/* Living paper background: typed glyphs, pastel side washes and paper grain.
    Ported from the "Home with typed grain" design (texture: type). */
 (function () {
   var canvas = document.getElementById('paper-bg');
@@ -7,9 +7,7 @@
   var PAL = [[92, 116, 96], [158, 98, 72], [76, 92, 124], [146, 124, 70]];
   var PASTEL = [[247, 196, 178], [204, 194, 238], [184, 226, 206], [242, 222, 166], [182, 212, 238]];
   var GLYPHS = ['.', ',', ':', ';', '+', '=', '*'];
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var t0 = performance.now();
-  var w = 0, h = 0, grain, grainPat, raf;
+    var w = 0, h = 0, grain, grainPat;
 
   function makeGrain() {
     var g = document.createElement('canvas'); g.width = 180; g.height = 180;
@@ -115,23 +113,23 @@
     ctx.globalAlpha = 1;
   }
 
+  /* one random moment of the drift, drawn once per page load; no animation loop */
+  var T = Math.random() * 2000;
+  var timer;
+
   function resize() {
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     w = window.innerWidth; h = window.innerHeight;
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     grainPat = null;
-    if (reduce) draw(0);
-  }
-
-  function frame(now) {
-    raf = requestAnimationFrame(frame);
-    if (document.hidden) return;
-    draw((now - t0) / 1000);
+    draw(T);
   }
 
   grain = makeGrain();
   resize();
-  window.addEventListener('resize', resize);
-  if (!reduce) raf = requestAnimationFrame(frame);
+  window.addEventListener('resize', function () {
+    clearTimeout(timer);
+    timer = setTimeout(resize, 150);
+  });
 })();
