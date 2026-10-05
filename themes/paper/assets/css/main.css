@@ -4,7 +4,7 @@
 */
 
 :root {
-  --paper: #e9e8e4;
+  --paper: #f3f2ef;
   --ink: #2b2824;
   --ink-soft: #5c564b;
   --muted: #7a7266;
@@ -31,6 +31,18 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
+
+#paper-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page { position: relative; z-index: 1; }
 
 a { color: inherit; text-decoration: none; }
 a:hover { opacity: .6; }

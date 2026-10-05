@@ -16,7 +16,7 @@
 <meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <link rel="canonical" href="{{ .Permalink }}">
-<meta name="theme-color" content="#e9e8e4">
+<meta name="theme-color" content="#f3f2ef">
 {{- range .AlternativeOutputFormats }}
 <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
 {{- end }}
@@ -32,3 +32,6 @@
 <link rel="preload" href="{{ printf "fonts/courier-prime-%s.woff2" . | relURL }}" as="font" type="font/woff2" crossorigin>
 {{- end }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ with $css.Data.Integrity }} integrity="{{ . }}"{{ end }}>
+{{- $bg := resources.Get "js/background.js" }}
+{{- if hugo.IsProduction }}{{ $bg = $bg | minify | fingerprint }}{{ end }}
+<script src="{{ $bg.RelPermalink }}"{{ with $bg.Data.Integrity }} integrity="{{ . }}"{{ end }} defer></script>
