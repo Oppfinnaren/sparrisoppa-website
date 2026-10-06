@@ -1,0 +1,22 @@
+<header class="header" id="top">
+  <div class="wrap header__bar">
+    <a class="brand" href="{{ "/" | relURL }}#top">
+      <span class="brand__mark" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+      <span>{{ site.Params.brand | default site.Title }}</span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"
+            data-open="{{ site.Params.menu_close | default "Stäng" }}" data-closed="{{ site.Params.menu_open | default "Meny" }}">{{ site.Params.menu_open | default "Meny" }}</button>
+    <nav class="nav" id="site-nav" aria-label="{{ site.Params.menu_open | default "Meny" }}">
+      {{- with site.GetPage "/sections" }}
+        {{- range .Pages.ByWeight }}
+          {{- if and .Params.nav .Params.anchor }}
+      <a href="#{{ .Params.anchor }}">{{ .Params.nav }}</a>
+          {{- end }}
+        {{- end }}
+      {{- end }}
+      {{- with site.Params.nav_cta }}
+      <a class="nav__cta" href="{{ .href }}">{{ .text }}</a>
+      {{- end }}
+    </nav>
+  </div>
+</header>

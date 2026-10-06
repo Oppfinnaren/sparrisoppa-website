@@ -1,0 +1,3 @@
+{{- /* 39000 -> "39 000" (non-breaking space as thousands separator) */ -}}
+{{- $n := printf "%d" (int .) -}}
+{{- replaceRE `(\d)(\d{3})$` "${1} ${2}" $n -}}

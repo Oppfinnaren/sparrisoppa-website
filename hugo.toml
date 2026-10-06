@@ -1,47 +1,58 @@
-# Site settings. Content lives in content/, the look in themes/paper/.
+# Site settings. Text lives in content/, the look in themes/veckobygget/.
 baseURL = "https://sparrisoppa.github.io/website/"
-locale = "en"
-title = "Mathias Kallmert"
-theme = "paper"
+locale = "sv"
+languageCode = "sv-SE"
+title = "Veckobygget.se"
+theme = "veckobygget"
 
 enableRobotsTXT = true
-disableKinds = ["taxonomy", "term"]
+disableKinds = ["taxonomy", "term", "RSS"]
 
 [params]
-  author = "Mathias Kallmert"
-  description = "Software & Mechatronics engineer with focus on creating refined products. Based in Stockholm."
-  email = "mathias.kallmert@gmail.com"
+  brand = "Veckobygget.se"
+  tagline = "Automatisk administration och Företags-AI"
+  description = "Vi hjälper svenska småföretag att effektivisera lager, logistik, marknad och sälj. Tydligt avgränsade lösningar till fast pris, byggda på en vecka."
 
-  # Shown after the email in the footer and on the About page, in this order.
-  [[params.social]]
-    name = "GitHub"
-    url = "https://github.com/sparrisoppa"
-  [[params.social]]
-    name = "LinkedIn"
-    url = "https://www.linkedin.com/in/mathias-kallmert-66338ab2"
+  # "orange" or "green"
+  accent = "orange"
 
-# Top menu, left to right.
-[menus]
-  [[menus.main]]
-    name = "Index"
-    pageRef = "/"
-    weight = 10
-  [[menus.main]]
-    name = "Projects"
-    pageRef = "/projects"
-    weight = 20
-  [[menus.main]]
-    name = "About"
-    pageRef = "/about"
-    weight = 40
+  # One source of truth for the fixed price. Used in the hero, the pay-back
+  # calculator and the pricing section.
+  price = 39000
+  currency = "kr"
+
+  # Button at the end of the top menu. The links to the page sections are
+  # generated from content/sections/ (every file with `nav` and `anchor`).
+  [params.nav_cta]
+    text = "Boka gratis rådgivning"
+    href = "#kontakt"
+
+  # Footer.
+  [params.company]
+    name = "Veckobygget AB"
+    legal = "Org.nr 559XXX-XXXX · F-skattsedel"
+    email = "hej@veckobygget.se"
+    phone = "070-000 00 00"
+    address = "Gatuadress 1, 123 45 Ort"
+
+  # ---- Cal.com booking ----------------------------------------------------
+  # 1. Create a free account at https://cal.com and an event type (e.g. "30min").
+  # 2. Set `link` to "<your-username>/<event-slug>", the path of your booking page.
+  # 3. Push. The embed loads in the "Kontakt" section.
+  # While `link` is empty, a plain e-mail button is shown instead.
+  [params.cal]
+    link = ""                          # e.g. "mathias-kallmert/30min"
+    namespace = "booking"              # any short name, only used by the embed script
+    origin = "https://app.cal.com"     # change only if you self-host Cal.com
+    layout = "month_view"              # month_view | week_view | column_view
+    fallback_text = "Boka ett första samtal via e-post, så hör jag av mig med förslag på tider."
+    fallback_button = "Skicka e-post"
+
+[markup.goldmark.renderer]
+  unsafe = false
 
 [outputs]
   home = ["html"]
-  section = ["html", "rss"]
-
-[markup.highlight]
-  noClasses = true
-  style = "bw"
 
 [minify.tdewolff.html]
   keepWhitespace = false

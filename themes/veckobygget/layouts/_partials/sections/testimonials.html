@@ -1,0 +1,22 @@
+{{- $items := .Params.items }}
+<section class="section--accent quotes">
+  <div class="wrap">
+    {{- range $i, $q := $items }}
+    <blockquote{{ if $i }} hidden{{ end }}>”{{ $q.text }}”</blockquote>
+    {{- end }}
+    <div class="quotes__foot">
+      <div>
+        {{- range $i, $q := $items }}
+        <span class="quotes__by"{{ if $i }} hidden{{ end }}><strong>{{ $q.name }}</strong> · {{ $q.role }}</span>
+        {{- end }}
+      </div>
+      {{- if gt (len $items) 1 }}
+      <div class="quotes__ctl">
+        <span class="mono" aria-live="polite"><span data-quote-current>1</span> / {{ len $items }}</span>
+        <button type="button" data-quote-prev aria-label="{{ .Params.prev_label | default "Föregående" }}">←</button>
+        <button type="button" data-quote-next aria-label="{{ .Params.next_label | default "Nästa" }}">→</button>
+      </div>
+      {{- end }}
+    </div>
+  </div>
+</section>

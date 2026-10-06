@@ -1,0 +1,7 @@
+<section class="section wrap offer"{{ with .Params.anchor }} id="{{ . }}"{{ end }}>
+  <h2 class="h2" style="max-width:820px">{{ .Title }}</h2>
+  <div class="compare">
+    <div><span>{{ .Params.before.label }}</span><p>{{ .Params.before.text }}</p></div>
+    <div><span>{{ .Params.after.label }}</span><p>{{ .Params.after.text }}</p></div>
+  </div>
+</section>

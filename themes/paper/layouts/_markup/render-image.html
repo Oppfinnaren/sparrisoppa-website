@@ -1,4 +1,0 @@
-{{- $src := .Destination -}}
-{{- with .Page.Resources.Get .Destination }}{{ $src = .RelPermalink }}{{ else }}{{ $src = partial "url.html" .Destination }}{{ end -}}
-<img src="{{ $src }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy">
-{{- /**/ -}}

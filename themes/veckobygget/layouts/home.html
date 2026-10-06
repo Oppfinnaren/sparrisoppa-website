@@ -1,0 +1,13 @@
+{{ define "main" }}
+  {{- partial "hero.html" . }}
+  {{- /* Every file in content/sections/ is one block on the page.
+        `weight` sets the order; `block` picks the partial in
+        layouts/_partials/sections/. */}}
+  {{- with site.GetPage "/sections" }}
+    {{- range .Pages.ByWeight }}
+      {{- if .Params.block }}
+        {{- partial (printf "sections/%s.html" .Params.block) . }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{ end }}

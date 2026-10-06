@@ -1,0 +1,24 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- $title := cond .IsHome (printf "%s – %s" site.Title (site.Params.tagline | default "")) (printf "%s · %s" .Title site.Title) }}
+<title>{{ $title | strings.TrimSuffix " – " }}</title>
+{{- $desc := or .Description .Params.description site.Params.description }}
+{{- with $desc }}
+<meta name="description" content="{{ . | plainify }}">
+{{- end }}
+<meta property="og:title" content="{{ $title }}">
+{{- with $desc }}
+<meta property="og:description" content="{{ . | plainify }}">
+{{- end }}
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:locale" content="{{ site.Language.Locale | default "sv" | replace "-" "_" }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<meta name="theme-color" content="#F8F9FA">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+{{- $css := slice (resources.Get "css/fonts.css") (resources.Get "css/main.css") | resources.Concat "css/site.css" }}
+{{- if hugo.IsProduction }}{{ $css = $css | minify | fingerprint }}{{ end }}
+{{- range slice "instrument-sans-latin" "jetbrains-mono-latin" }}
+<link rel="preload" href="{{ printf "fonts/%s.woff2" . | relURL }}" as="font" type="font/woff2" crossorigin>
+{{- end }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ with $css.Data.Integrity }} integrity="{{ . }}"{{ end }}>

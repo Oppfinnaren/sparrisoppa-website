@@ -1,0 +1,12 @@
+{{- with site.Params.company }}
+<footer class="footer">
+  <div class="wrap">
+    <div><strong>{{ .name }}</strong><span>{{ .legal }}</span></div>
+    <div>
+      {{- with .email }}<a href="mailto:{{ . }}">{{ . }}</a>{{ end }}
+      {{- with .phone }}<span>{{ . }}</span>{{ end }}
+    </div>
+    <div><span>{{ .address }}</span><span>Copyright © {{ now.Year }} {{ site.Params.brand | default site.Title }}</span></div>
+  </div>
+</footer>
+{{- end }}

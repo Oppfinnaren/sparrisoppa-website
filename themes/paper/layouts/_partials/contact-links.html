@@ -1,8 +1,0 @@
-{{- /* Links from site params: email first, then params.social in order. Context: dict "sep" (string) */ -}}
-{{- $links := slice }}
-{{- with site.Params.email }}{{ $links = $links | append (dict "name" . "url" (printf "mailto:%s" .)) }}{{ end }}
-{{- range site.Params.social }}{{ $links = $links | append (dict "name" .name "url" .url) }}{{ end }}
-{{- range $i, $l := $links }}
-  {{- if and $i $.sep }}<span class="sep" aria-hidden="true">{{ $.sep }}</span>{{ end -}}
-  <a href="{{ partial "url.html" $l.url }}"{{ with $.class }} class="{{ . }}"{{ end }}{{ if hasPrefix $l.url "http" }} rel="me noopener"{{ end }}>{{ $l.name }}</a>
-{{- end }}

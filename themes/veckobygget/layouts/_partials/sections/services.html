@@ -1,0 +1,16 @@
+<section class="section--white"{{ with .Params.anchor }} id="{{ . }}"{{ end }}>
+  <div class="section wrap">
+    <div class="section-head">
+      <h2 class="h2">{{ .Title }}</h2>
+      {{- with .Params.count_label }}<span class="label">{{ . }}</span>{{ end }}
+    </div>
+    <div class="services">
+      {{- range $i, $s := .Params.items }}
+      <div class="service">
+        <div class="service__title"><span class="service__n">{{ printf "%02d" (add $i 1) }}</span><h3>{{ $s.title }}</h3></div>
+        <p>{{ $s.body }}</p>
+      </div>
+      {{- end }}
+    </div>
+  </div>
+</section>

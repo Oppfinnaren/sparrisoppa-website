@@ -1,9 +1,0 @@
-{{ define "main" }}
-<header class="section-head">
-  <h1>{{ .Title }}</h1>
-  {{- with .Description }}
-  <p class="lede">{{ . }}</p>
-  {{- end }}
-</header>
-{{ partial "year-list.html" (dict "pages" .Pages "aside" "status") }}
-{{ end }}

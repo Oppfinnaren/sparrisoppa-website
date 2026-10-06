@@ -1,0 +1,7 @@
+{{ define "main" }}
+<div class="wrap notfound">
+  <h1 class="h2">404</h1>
+  <p class="lead">{{ site.Params.notfound_text | default "Sidan finns inte." }}</p>
+  <a class="btn" href="{{ "/" | relURL }}">{{ site.Params.notfound_link | default "Till startsidan" }}</a>
+</div>
+{{ end }}

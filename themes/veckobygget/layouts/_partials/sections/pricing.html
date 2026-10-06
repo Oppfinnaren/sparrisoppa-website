@@ -1,0 +1,29 @@
+{{- $m := .Params.main }}
+<section class="section wrap pricing"{{ with .Params.anchor }} id="{{ . }}"{{ end }}>
+  <h2 class="h2">{{ .Title }}</h2>
+  <div class="pricing__grid">
+    <div class="plan--main">
+      <div class="plan__head"><b>{{ $m.name }}</b><span>{{ $m.tag }}</span></div>
+      <div class="plan__price"><strong>{{ partial "price.html" site.Params.price }} {{ site.Params.currency | default "kr" }}</strong><small>{{ $m.suffix }}</small></div>
+      <ul class="plan__list">
+        {{- range $m.features }}
+        <li{{ if .key }} class="is-key"{{ end }}>{{ .text }}</li>
+        {{- end }}
+      </ul>
+      <a class="btn btn--block" href="{{ $m.cta.href }}">{{ $m.cta.text }}</a>
+    </div>
+    <div class="plans">
+      {{- range .Params.plans }}
+      <div class="plan--side">
+        <div class="plan__head"><b>{{ .name }}</b><span>{{ .tag }}</span></div>
+        <div class="plan__price"><strong>{{ partial "price.html" .price }} kr</strong><small>{{ .unit }}</small></div>
+        <p>{{ .text | markdownify }}</p>
+        <div class="plan__foot">
+          <a class="link" href="{{ .cta.href }}">{{ .cta.text }}</a>
+          {{- with .footnote }}<small>{{ . }}</small>{{ end }}
+        </div>
+      </div>
+      {{- end }}
+    </div>
+  </div>
+</section>

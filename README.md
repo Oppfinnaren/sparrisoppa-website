@@ -1,87 +1,53 @@
-# Personal site
+# Veckobygget.se
 
-A small personal site built with [Hugo](https://gohugo.io): a home page, projects and an about page. The look is typewriter type on cream paper, from the Claude Design mockups in `design/` (directions 1a, 2a, 2b and 2c).
-
-All text is in Markdown files under `content/`. To update the site, edit a file and push to `main`. GitHub Actions builds the site and copies it to your server.
+A one-page Swedish service site built with [Hugo](https://gohugo.io). All text is Markdown under `content/`. Edit a file, push to `main`, and GitHub Actions builds and publishes it to GitHub Pages.
 
 ```
-content/            ← your text (Markdown)
-  _index.md           home page: name and short statement
-  about.md            about page, plus the Experience and Education lists
-  projects/           one file per project
-static/images/      ← images you reference from content
-hugo.toml           ← site name, email, social links, menu
-themes/paper/       ← the template (layouts, CSS, fonts)
-deploy/             ← Caddy and nginx configs, manual deploy script
-design/             ← the original design handoff, for reference
-```
-
-## Running it locally
-
-Install Hugo **extended**, version 0.158 or newer (`brew install hugo`, `winget install Hugo.Hugo.Extended`, or a [release binary](https://github.com/gohugoio/hugo/releases)). Then:
-
-```sh
-hugo server -D      # http://localhost:1313, reloads as you edit; -D shows drafts
-hugo --gc --minify  # builds the site into public/
+hugo.toml                   site settings: brand, accent colour, price, footer, Cal.com
+content/
+  _index.md                 hero (headline, price sticker, the AI-flow example)
+  sections/                 one file per block of the page, ordered by `weight`
+    10-offer.md             before / after comparison
+    20-services.md          "Vad vi bygger"
+    30-process.md           "Så fungerar det"
+    40-testimonials.md      customer quotes
+    50-calculator.md        pay-back calculator
+    60-pricing.md           build price and support plans
+    70-faq.md               questions and answers (Markdown)
+    80-contact.md           heading, Cal.com booking, contact person
+assets/images/              images used from content (resized by Hugo)
+themes/veckobygget/         the template: layouts, CSS, JS, fonts
+.github/workflows/pages.yml builds and deploys to GitHub Pages
 ```
 
 ## Editing content
 
-### Name, email, links and menu
+- **Text and lists**: open the file in `content/sections/` and edit the front matter (the part between `---` lines). Lists such as services, steps, quotes and FAQ items are simple `- title:` / `body:` entries; copy one to add another.
+- **Order**: change `weight` in a section file. Add a section by copying a file and changing `block` to one of `offer`, `services`, `process`, `testimonials`, `calculator`, `pricing`, `faq`, `contact`.
+- **Menu**: every section with both `nav` (label) and `anchor` (id) gets a menu link. The button at the end is `params.nav_cta` in `hugo.toml`.
+- **Price**: `price` in `hugo.toml` drives the hero sticker, the calculator and the pricing card. The two support plans have their own `price` in `60-pricing.md`.
+- **Accent colour**: `accent = "orange"` or `"green"` in `hugo.toml`. Other colours are variables at the top of `themes/veckobygget/assets/css/main.css`.
+- **Photo**: put the image in `assets/images/` and set `person.photo` in `80-contact.md`.
+- **Footer details**: `[params.company]` in `hugo.toml` (the org number and address are placeholders).
 
-These are in `hugo.toml`: `title` and `params.author` (your name), `params.email`, `params.social` (GitHub, LinkedIn and so on, in display order) and `menus.main`. Also set `baseURL` to your domain.
+## Cal.com booking
 
-### Home page
+The contact section embeds a [Cal.com](https://cal.com) booking calendar in place of the old mock-up. To switch it on:
 
-`content/_index.md`. The `title` is the big name, and the body is the statement under it.
+1. Create a Cal.com account and an event type (for example a 30 minute video call).
+2. In `hugo.toml`, set `link` under `[params.cal]` to `"<your-username>/<event-slug>"`, for example `"mathias-kallmert/30min"`.
+3. Push. The calendar loads when visitors scroll near it, uses the site's accent colour, and falls back to a link when JavaScript is off.
 
-The "Selected projects" list shows every page, project or post, that has `featured: true`, newest first, up to `featured_limit`. Each row shows the page's `home_title` (or its `title`) and its year.
+Until `link` is set, the section shows an e-mail button instead. If you self-host Cal.com, set `origin` too. In Cal.com you can also set the confirmation redirect, e-mails and the intake questions (name, company, "what do you want to simplify?").
 
-### Projects
+## Running it locally
 
-Make a new project with `hugo new content projects/my-project.md`, or copy an existing file. The front matter:
+Install Hugo **extended**, version 0.146 or newer (`brew install hugo`, `winget install Hugo.Hugo.Extended`, or a [release binary](https://github.com/gohugoio/hugo/releases)). Then:
 
-```yaml
----
-title: "WALL-E"
-date: 2022-01-01
-weight: 1                   # order in lists: lower comes first
-year: "2022 – now"          # optional, otherwise the year of `date`
-description: "A four-wheeled robot that collects trash on its own."
-status: "work in progress"  # shown in the list, capitalised on the page
-role: "Design, code"
-stack: ["Language", "Framework"]  # a list or a single string
-featured: true              # list it on the home page
-home_title: "WALL-E, a trash-collecting robot"
-links:
-  - name: "Source on GitHub"
-    url: "https://github.com/sparrisoppa/wall-e"
-draft: false                # drafts are not published
----
+```sh
+hugo server     # http://localhost:1313, reloads as you edit
+hugo --gc --minify
 ```
-
-`role`, `stack`, `status`, `year` and `links` are optional. The row of facts under the title only shows the ones you fill in.
-
-Projects are listed by `weight`, then newest first. Projects next to each other in that order that share a year label sit under one year heading.
-
-The body is ordinary Markdown. `##` gives the small bold subheadings. For figures, use the shortcode:
-
-```
-{{< figure src="/images/wall-e.jpg" alt="Sync diagram" caption="Fig. 1, the sync model" >}}
-{{< figure placeholder="screenshot or diagram" caption="Fig. 1, the sync model" >}}
-```
-
-Put images in `static/images/`. You can also make the project a folder (`projects/wall-e/index.md`) and keep its images beside it, then use `src="sync.png"`.
-
-"Next project" at the bottom goes to the next project in list order and loops back to the first after the last one.
-
-### Adding a Writing section later
-
-The theme still supports a blog. Create `content/writing/_index.md` with a `title` and `description`, add posts as `content/writing/my-post.md` (with `title`, `date` and `description`), and add a "Writing" entry to `menus.main` in `hugo.toml`. Posts get the same list and page styles as projects, plus an RSS feed.
-
-### About
-
-`content/about.md`. The body holds the paragraphs. `timelines` holds the lists under the text (each has a `heading` and `items` with `when` and `what`), and `portrait` takes an image path such as `/images/me.jpg` (square, at least 220×220). Leave `portrait` empty to show the striped placeholder. The "Elsewhere" links come from `hugo.toml`.
 
 ## Publishing
 

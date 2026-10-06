@@ -1,0 +1,34 @@
+{{- $c := .Params }}
+{{- $price := site.Params.price }}
+<section class="section section--flush-bottom wrap"{{ with $c.anchor }} id="{{ . }}"{{ end }}>
+  <div class="calc__intro">
+    <h2 class="h2">{{ .Title }}</h2>
+    <p class="lead">{{ $c.intro }}</p>
+  </div>
+  <div class="calc" data-calc data-price="{{ $price }}" data-weeks="{{ $c.weeks_per_year }}"
+       data-unit-week="{{ $c.unit_week }}" data-unit-month="{{ $c.unit_month }}">
+    <div class="calc__in">
+      <label>
+        <div class="calc__row"><span>{{ $c.hours.label }}</span><strong><output data-out="hours">{{ $c.hours.default }}</output> h</strong></div>
+        <input type="range" name="hours" min="{{ $c.hours.min }}" max="{{ $c.hours.max }}" step="{{ $c.hours.step }}" value="{{ $c.hours.default }}">
+        <small>{{ $c.hours.hint }}</small>
+      </label>
+      <label>
+        <div class="calc__row"><span>{{ $c.rate.label }}</span><strong><output data-out="rate">{{ $c.rate.default }}</output> kr</strong></div>
+        <input type="range" name="rate" min="{{ $c.rate.min }}" max="{{ $c.rate.max }}" step="{{ $c.rate.step }}" value="{{ $c.rate.default }}">
+        <small>{{ $c.rate.hint }}</small>
+      </label>
+    </div>
+    <div class="calc__out">
+      <div>
+        <span class="label">{{ $c.payback_label }}</span>
+        <span class="calc__big" data-out="payback" aria-live="polite"></span>
+      </div>
+      <div class="calc__pair">
+        <div><span>{{ $c.year_hours_label }}</span><strong><span data-out="yearHours"></span> h</strong></div>
+        <div><span>{{ $c.year_value_label }}</span><strong><span data-out="yearValue"></span> kr</strong></div>
+      </div>
+      <span class="calc__fine">{{ $c.fineprint | replaceRE `\{price\}` (printf "%s kr" (partial "price.html" $price)) | replaceRE `\{weeks\}` (printf "%v" $c.weeks_per_year) }}</span>
+    </div>
+  </div>
+</section>

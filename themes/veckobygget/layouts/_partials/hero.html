@@ -1,0 +1,36 @@
+{{- $p := .Params }}
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__top">
+      <h1>{{ $p.headline }} {{ with $p.highlight }}<em>{{ . }}</em>{{ end }}</h1>
+      {{- with $p.sticker }}
+      <div class="sticker">
+        <strong>{{ .title }}</strong>
+        <span>{{ partial "price.html" site.Params.price }} {{ site.Params.currency | default "kr" }} {{ .suffix }}</span>
+        {{- with .link }}<a href="{{ .href }}">{{ .text }}</a>{{ end }}
+      </div>
+      {{- end }}
+    </div>
+    <div class="hero__intro">
+      <p>{{ $p.intro }}</p>
+      <div class="hero__cta">
+        {{- with $p.cta_primary }}<a class="btn" href="{{ .href }}">{{ .text }}</a>{{ end }}
+        {{- with $p.cta_secondary }}<a class="btn btn--ghost" href="{{ .href }}">{{ .text }}</a>{{ end }}
+      </div>
+    </div>
+    {{- with $p.flow }}
+    <div class="flow">
+      <div class="flow__steps">
+        {{- range .steps }}
+        <div class="flow__step{{ if .decision }} flow__step--decision{{ end }}">
+          <div class="flow__meta"><span>{{ .label }}</span><span>{{ .time }}</span></div>
+          <strong>{{ .title }}</strong>
+          <p>{{ .body }}</p>
+        </div>
+        {{- end }}
+      </div>
+      <div class="flow__foot"><span>{{ .caption_left }}</span><span>{{ .caption_right }}</span></div>
+    </div>
+    {{- end }}
+  </div>
+</section>

@@ -1,0 +1,4 @@
+name = "Veckobygget"
+license = "MIT"
+description = "A one-page Swedish service site: hero, offer, services, process, testimonials, pay-back calculator, pricing, FAQ and a Cal.com booking embed."
+min_version = "0.146.0"

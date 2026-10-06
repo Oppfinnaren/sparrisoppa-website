@@ -1,0 +1,25 @@
+{{- /* Cal.com booking embed. Configure it under [params.cal] in hugo.toml.
+       With no `link` set, a plain e-mail button is shown instead. */ -}}
+{{- $cal := site.Params.cal }}
+<div class="booking">
+  {{- if $cal.link }}
+  <div class="booking__inner" id="cal-embed"
+       data-link="{{ $cal.link }}"
+       data-namespace="{{ $cal.namespace | default "booking" }}"
+       data-origin="{{ $cal.origin | default "https://app.cal.com" }}"
+       data-layout="{{ $cal.layout | default "month_view" }}"></div>
+  <noscript>
+    <div class="booking__fallback">
+      <p>{{ $cal.noscript_text | default "Aktivera JavaScript för att boka här, eller öppna kalendern direkt." }}</p>
+      <a class="btn" href="{{ $cal.origin | default "https://app.cal.com" }}/{{ $cal.link }}">{{ $cal.fallback_button | default "Öppna kalendern" }}</a>
+    </div>
+  </noscript>
+  {{- else }}
+  <div class="booking__fallback">
+    <p>{{ $cal.fallback_text | default "Boka ett samtal via e-post." }}</p>
+    {{- with site.Params.company.email }}
+    <a class="btn" href="mailto:{{ . }}">{{ $cal.fallback_button | default . }}</a>
+    {{- end }}
+  </div>
+  {{- end }}
+</div>

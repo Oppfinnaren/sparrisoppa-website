@@ -1,0 +1,14 @@
+<section class="section wrap process"{{ with .Params.anchor }} id="{{ . }}"{{ end }}>
+  <h2 class="h2">{{ .Title }}</h2>
+  <div class="steps">
+    {{- range $i, $s := .Params.steps }}
+    <div class="step{{ if $s.highlight }} step--hi{{ end }}">
+      <div class="step__head"><span>{{ $.Params.step_label }} {{ add $i 1 }}</span><span>{{ $s.when }}</span></div>
+      <div class="step__body"><h3>{{ $s.title }}</h3><p>{{ $s.body }}</p></div>
+    </div>
+    {{- end }}
+  </div>
+  {{- with .Params.note }}
+  <p class="note"><b>{{ .label }}</b>{{ .text }}</p>
+  {{- end }}
+</section>
